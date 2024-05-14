@@ -1,4 +1,4 @@
-use std::{path::PathBuf, path::Path, process::exit};
+use std::{path::PathBuf, process::exit};
 use clap::Parser;
 use uniq::*;
 
@@ -20,7 +20,7 @@ fn main() {
         "c" => un.print_counters(),
         "d" => un.print_duplicates(),
         "u" => un.print_uniq(),
-        "-" => un.read_and_write(Path::new(&args.file_path)),
+        "-" => un.read_and_write(),
         _ => exit(1),
     }
 }

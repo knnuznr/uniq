@@ -1,5 +1,5 @@
 /* Structure for UNIQ */
-use std::{collections::HashMap, fs::File, io::{self, BufRead, BufReader, Write}, path::{Path, PathBuf}
+use std::{collections::HashMap, fs::File, io::{self, BufRead, BufReader, Write}, path::{PathBuf}
 };
 
 pub struct UNIQ {
@@ -58,8 +58,8 @@ impl UNIQ {
         }
     }
 
-    pub fn read_and_write(&self,file: &Path) {
-        let file_path = PathBuf::from(file);
+    pub fn read_and_write(&self) {
+        let file_path = PathBuf::from(&self.file_path);
         let mut u_input = String::new();
         let _reader = io::stdin().read_line(&mut u_input).unwrap(); 
         let mut file = File::create(&file_path).unwrap(); 
