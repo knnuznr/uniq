@@ -1,15 +1,11 @@
+mod cli;
+
 use std::{path::PathBuf, process::exit};
 use clap::Parser;
 use uniq::*;
 
-#[derive(Parser)]
-struct Args {
-    operation: String,
-    file_path: String,
-}
-
 fn main() {
-    let args = Args::parse();
+    let args = cli::Args::parse();
 
     let path_buf = PathBuf::from(&args.file_path);
 
