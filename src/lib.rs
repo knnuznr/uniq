@@ -48,7 +48,15 @@ impl UNIQ {
 
     pub fn count_unique_lines(&self) {
         let counts = self.count_lines();
-        println!("{}", counts.len());
+        let mut dummy = 0;
+        for &count in counts.values() {
+            if count == 1 {
+                dummy += count;
+            } else if count > 2 {
+                continue;
+            }
+        }
+        println!("{}", dummy);
     }
 
     pub fn print_counters(&self) {
@@ -60,9 +68,18 @@ impl UNIQ {
 
     pub fn read_and_write(&self) {
         let file_path = PathBuf::from(&self.file_path);
-        let mut u_input = String::new();
-        let _reader = io::stdin().read_line(&mut u_input).unwrap(); 
-        let mut file = File::create(&file_path).unwrap(); 
-        file.write_all(u_input.trim().as_bytes()).unwrap(); 
+        let mut file = File::create(&file_path).unwrap();
+        let stdin = io::stdin();
+        let locked_stdin = stdin.lock();
+
+        for line in locked_stdin.lines() {
+            let line = line.expect("Failed to read line");
+
+            if line.trim().is_empty() {
+                break;
+            }
+            file.write_all(line.trim().as_bytes()).expect("Failed to write to file");
+            file.write_all(b"\n").expect("Failed to write to file");
+        }
     }
 }
